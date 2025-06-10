@@ -2,10 +2,9 @@ package com.example.textgenerator.controllers;
 
 import com.example.textgenerator.models.Phrase;
 import com.example.textgenerator.services.PhraseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.events.Event;
 
 import java.util.List;
@@ -19,12 +18,20 @@ public class PhraseController {
     }
 
     @GetMapping("/phrases")
-    public List<Phrase> getAllPhrases() {
-        return phraseService.getAllPhrases();
+    public ResponseEntity<List<Phrase>> getAllPhrases() {
+        List<Phrase> phrases = phraseService.getAllPhrases();
+        return new ResponseEntity<List<Phrase>>(phrases, HttpStatus.OK);
     }
 
-    @PostMapping("/patata")
-    public void addPhrase(@RequestBody Phrase newPhrase) {
-        phraseService.addPhrase(newPhrase);
+    @PostMapping("/phrases")
+    public ResponseEntity<Phrase> addPhrase(@RequestBody Phrase newPhrase) {
+        Phrase createdPhrase = phraseService.addPhrase(newPhrase);
+        return new ResponseEntity<Phrase>(createdPhrase, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/phrases/{id}")
+    public ResponseEntity<Phrase> deletePhrase(@PathVariable Long id) {
+        Phrase deletedPhrase = phraseService.deletePhrase(id);
+        return new ResponseEntity<Phrase>(deletedPhrase, HttpStatus.OK);
     }
 }
