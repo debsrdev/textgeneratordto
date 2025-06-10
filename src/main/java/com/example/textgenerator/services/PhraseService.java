@@ -43,4 +43,16 @@ public class PhraseService {
             throw new RuntimeException("Frase con id " + id + " no encontrada");
         }
     }
+
+    public Phrase updatePhrase(Long id, Phrase updatedPhrase) {
+        Optional<Phrase> optionalPhrase = phraseRepository.findById(id);
+        if (optionalPhrase.isPresent()) {
+            Phrase phraseToUpdate = optionalPhrase.get();
+            phraseToUpdate.setAuthor(updatedPhrase.getAuthor());
+            phraseToUpdate.setText(updatedPhrase.getText());
+            return phraseRepository.save(phraseToUpdate);
+        } else {
+            throw new RuntimeException("Frase con id " + id + " no encontrada");
+        }
+    }
 }
