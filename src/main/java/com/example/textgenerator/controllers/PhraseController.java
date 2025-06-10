@@ -17,6 +17,11 @@ public class PhraseController {
         this.phraseService = phraseService;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<String> home() {
+        return new ResponseEntity<>("Bienvenidx a la API de generación de frases. Usa /phrases para obtener un listado de todas las frases", HttpStatus.OK);
+    }
+
     @GetMapping("/phrases")
     public ResponseEntity<List<Phrase>> getAllPhrases() {
         List<Phrase> phrases = phraseService.getAllPhrases();
@@ -29,19 +34,19 @@ public class PhraseController {
         return new ResponseEntity<Phrase>(createdPhrase, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/phrases/phrase/{id}")
+    @DeleteMapping("/phrases/{id}")
     public ResponseEntity<Phrase> deletePhrase(@PathVariable Long id) {
         Phrase deletedPhrase = phraseService.deletePhrase(id);
         return new ResponseEntity<Phrase>(deletedPhrase, HttpStatus.OK);
     }
 
-    @GetMapping("phrases/phrase/{id}")
+    @GetMapping("phrases/{id}")
     public ResponseEntity<Phrase> getPhraseById(@PathVariable Long id) {
         Phrase phrase = phraseService.getPhraseById(id);
         return new ResponseEntity<Phrase>(phrase, HttpStatus.OK);
     }
 
-    @PutMapping("phrases/phrase/{id}")
+    @PutMapping("phrases/{id}")
     public ResponseEntity<Phrase> updatePhrase(@PathVariable Long id, @RequestBody Phrase updatedPhrase) {
         Phrase phrase = phraseService.updatePhrase(id, updatedPhrase);
         return new ResponseEntity<Phrase>(phrase, HttpStatus.OK);
