@@ -29,7 +29,7 @@ public class PhraseController {
         return new ResponseEntity<Phrase>(createdPhrase, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/phrases/{id}")
+    @DeleteMapping("/phrases/phrase/{id}")
     public ResponseEntity<Phrase> deletePhrase(@PathVariable Long id) {
         Phrase deletedPhrase = phraseService.deletePhrase(id);
         return new ResponseEntity<Phrase>(deletedPhrase, HttpStatus.OK);
