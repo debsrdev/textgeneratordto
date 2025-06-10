@@ -34,4 +34,13 @@ public class PhraseService {
             throw new RuntimeException("Frase con id " + id + " no encontrada");
         }
     }
+
+    public Phrase getPhraseById(Long id) {
+        Optional<Phrase> optionalPhrase = phraseRepository.findById(id);
+        if (optionalPhrase.isPresent()) {
+            return optionalPhrase.get();
+        } else {
+            throw new RuntimeException("Frase con id " + id + " no encontrada");
+        }
+    }
 }

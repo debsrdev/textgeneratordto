@@ -34,4 +34,9 @@ public class PhraseController {
         Phrase deletedPhrase = phraseService.deletePhrase(id);
         return new ResponseEntity<Phrase>(deletedPhrase, HttpStatus.OK);
     }
+    @GetMapping("phrases/phrase/{id}")
+    public ResponseEntity<Phrase> getPhraseById(@PathVariable Long id) {
+        Phrase phrase = phraseService.getPhraseById(id);
+        return new ResponseEntity<Phrase>(phrase, HttpStatus.OK);
+    }
 }
