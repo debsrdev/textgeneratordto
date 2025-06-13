@@ -1,5 +1,8 @@
 package com.example.textgenerator.services;
 
+import com.example.textgenerator.dtos.PhraseMapper;
+import com.example.textgenerator.dtos.PhraseRequest;
+import com.example.textgenerator.dtos.PhraseResponse;
 import com.example.textgenerator.models.Phrase;
 import com.example.textgenerator.repositories.PhraseRepository;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,15 @@ public class PhraseService {
         this.phraseRepository = phraseRepository;
     }
 
-    public List<Phrase> getAllPhrases() {
-        return phraseRepository.findAll();
+    public List<PhraseResponse> getAllPhrases() {
+        List<Phrase> phrases = phraseRepository.findAll();
+        return phrases.stream().map(phrase -> PhraseMapper.entityToDto(phrase)).toList();
     }
 
-    public Phrase addPhrase(Phrase newPhrase) {
-        return phraseRepository.save(newPhrase);
+    public PhraseResponse addPhrase(PhraseRequest phraseRequest) {
+        Phrase newPhrase = PhraseMapper.dtoToEntity(phraseRequest);
+        Phrase savedPhrase = phraseRepository.save(newPhrase);
+        return PhraseMapper.entityToDto(savedPhrase);
     }
 
     public Phrase deletePhrase(Long id) {

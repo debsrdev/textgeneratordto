@@ -14,6 +14,11 @@ public class Phrase {
     public Phrase() {
     }
 
+    public Phrase(String text, String author) {
+        this.text = text;
+        this.author = author;
+    }
+
     public Long getId() {
         return id;
     }

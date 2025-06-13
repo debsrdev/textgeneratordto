@@ -1,7 +1,10 @@
 package com.example.textgenerator.controllers;
 
+import com.example.textgenerator.dtos.PhraseRequest;
+import com.example.textgenerator.dtos.PhraseResponse;
 import com.example.textgenerator.models.Phrase;
 import com.example.textgenerator.services.PhraseService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +26,13 @@ public class PhraseController {
     }
 
     @GetMapping("/phrases")
-    public ResponseEntity<List<Phrase>> getAllPhrases() {
-        List<Phrase> phrases = phraseService.getAllPhrases();
-        return new ResponseEntity<List<Phrase>>(phrases, HttpStatus.OK);
+    public ResponseEntity<List<PhraseResponse>> getAllPhrases() {
+        return new ResponseEntity<>(phraseService.getAllPhrases(), HttpStatus.OK);
     }
 
     @PostMapping("/phrases")
-    public ResponseEntity<Phrase> addPhrase(@RequestBody Phrase newPhrase) {
-        Phrase createdPhrase = phraseService.addPhrase(newPhrase);
-        return new ResponseEntity<Phrase>(createdPhrase, HttpStatus.CREATED);
+    public ResponseEntity<PhraseResponse> addPhrase(@Valid @RequestBody PhraseRequest phraseRequest) {
+        return new ResponseEntity<>(phraseService.addPhrase(phraseRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/phrases/{id}")
